@@ -9,19 +9,11 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #0f1117;
-      color: #e2e8f0;
-      min-height: 100vh;
-      padding: 40px 16px;
+      background: #0f1117; color: #e2e8f0;
+      min-height: 100vh; padding: 40px 16px;
     }
-
     .page-wrap { max-width: 720px; margin: 0 auto; }
-
-    /* ── HEADER / BRANDING ── */
-    .brand-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 28px;
-    }
+    .brand-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
     .brand-left { display: flex; align-items: center; gap: 14px; }
     .brand-logo {
       width: 46px; height: 46px; border-radius: 12px;
@@ -37,8 +29,6 @@
       padding: 5px 12px; display: flex; align-items: center; gap: 6px;
     }
     .brand-author i { color: #6366f1; }
-
-    /* ── TABS ── */
     .tabs { display: flex; gap: 4px; background: #1a1d27; border: 1px solid #2a2d3a; border-radius: 10px; padding: 4px; margin-bottom: 20px; }
     .tab {
       flex: 1; padding: 8px; text-align: center; font-size: 13px;
@@ -48,19 +38,12 @@
     .tab.active { background: #1e3a5f; color: #93c5fd; }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
-
-    /* ── CARD ── */
-    .card {
-      background: #1a1d27; border: 1px solid #2a2d3a;
-      border-radius: 16px; padding: 28px;
-    }
-
+    .card { background: #1a1d27; border: 1px solid #2a2d3a; border-radius: 16px; padding: 28px; }
     .section-title {
       font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
       text-transform: uppercase; color: #475569; margin: 20px 0 10px;
     }
     .section-title:first-child { margin-top: 0; }
-
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
     .field { display: flex; flex-direction: column; gap: 5px; }
     .field label { font-size: 12px; color: #94a3b8; }
@@ -69,12 +52,8 @@
       border: 1px solid #2a2d3a; background: #0f1117;
       color: #e2e8f0; font-size: 13px;
     }
-    .field input:focus, .field select:focus {
-      outline: none; border-color: #3b82f6;
-      box-shadow: 0 0 0 2px rgba(59,130,246,0.15);
-    }
+    .field input:focus, .field select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.15); }
     .field select option { background: #1a1d27; }
-
     .btn {
       width: 100%; padding: 11px; margin-top: 20px;
       background: #1e3a5f; border: 1px solid #2a4a7f;
@@ -83,19 +62,11 @@
     }
     .btn:hover { background: #1d4ed8; color: #fff; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    /* ── RESULT ── */
-    .result-panel {
-      background: #0f1117; border: 1px solid #2a2d3a;
-      border-radius: 12px; padding: 20px; margin-top: 20px; display: none;
-    }
+    .result-panel { background: #0f1117; border: 1px solid #2a2d3a; border-radius: 12px; padding: 20px; margin-top: 20px; display: none; }
     .result-top { display: flex; align-items: center; gap: 20px; }
     .score-big { font-size: 40px; font-weight: 600; line-height: 1; }
     .score-out { font-size: 12px; color: #64748b; margin-top: 3px; }
-    .badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 4px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; margin-top: 8px;
-    }
+    .badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; margin-top: 8px; }
     .badge-hot { background: #3b1a0e; color: #fb923c; }
     .badge-warm { background: #2d1e06; color: #fbbf24; }
     .badge-cold { background: #0c1e35; color: #60a5fa; }
@@ -110,8 +81,6 @@
     .rec { font-size: 12px; color: #94a3b8; line-height: 1.6; }
     .rec strong { color: #e2e8f0; }
     .error { color: #f87171; font-size: 12px; margin-top: 8px; }
-
-    /* ── CSV UPLOAD ── */
     .drop-zone {
       border: 2px dashed #2a2d3a; border-radius: 12px;
       padding: 40px; text-align: center; cursor: pointer;
@@ -122,42 +91,28 @@
     .drop-zone p { font-size: 14px; color: #64748b; }
     .drop-zone span { font-size: 12px; color: #3b82f6; }
     #csv-input { display: none; }
-
-    /* ── BULK TABLE ── */
     .table-wrap { overflow-x: auto; margin-top: 20px; border-radius: 10px; border: 1px solid #2a2d3a; }
     table { width: 100%; border-collapse: collapse; font-size: 12px; }
     thead { background: #1a1d27; }
-    th { padding: 10px 12px; text-align: left; color: #64748b; font-weight: 600;
-         font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #2a2d3a; }
+    th { padding: 10px 12px; text-align: left; color: #64748b; font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #2a2d3a; }
     td { padding: 10px 12px; border-bottom: 1px solid #1a1d27; color: #e2e8f0; }
     tr:last-child td { border-bottom: none; }
     tr:hover td { background: #1a1d27; }
-    .pill {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 3px 8px; border-radius: 99px; font-size: 11px; font-weight: 600;
-    }
+    .pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; }
     .pill-hot { background: #3b1a0e; color: #fb923c; }
     .pill-warm { background: #2d1e06; color: #fbbf24; }
     .pill-cold { background: #0c1e35; color: #60a5fa; }
     .score-bar-wrap { display: flex; align-items: center; gap: 8px; }
     .score-bar-track { width: 80px; height: 4px; background: #2a2d3a; border-radius: 99px; overflow: hidden; }
     .score-bar-fill { height: 100%; border-radius: 99px; }
-    .bulk-summary {
-      display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;
-    }
-    .summary-card {
-      flex: 1; min-width: 100px; background: #0f1117;
-      border: 1px solid #2a2d3a; border-radius: 10px; padding: 12px 16px;
-    }
+    .bulk-summary { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .summary-card { flex: 1; min-width: 100px; background: #0f1117; border: 1px solid #2a2d3a; border-radius: 10px; padding: 12px 16px; }
     .summary-card .s-num { font-size: 24px; font-weight: 600; }
     .summary-card .s-label { font-size: 11px; color: #64748b; margin-top: 2px; }
     .hot-num { color: #fb923c; }
     .warm-num { color: #fbbf24; }
     .cold-num { color: #60a5fa; }
-    .progress-bar {
-      width: 100%; height: 4px; background: #2a2d3a; border-radius: 99px;
-      overflow: hidden; margin: 12px 0 6px;
-    }
+    .progress-bar { width: 100%; height: 4px; background: #2a2d3a; border-radius: 99px; overflow: hidden; margin: 12px 0 6px; }
     .progress-fill { height: 100%; background: #3b82f6; border-radius: 99px; transition: width 0.4s; }
     .progress-label { font-size: 11px; color: #64748b; }
     .download-btn {
@@ -167,12 +122,21 @@
       font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;
     }
     .download-btn:hover { background: #166534; color: #fff; }
+    .sheets-btn-row { display: flex; gap: 8px; margin-top: 16px; }
+    .sheets-btn-row .btn { margin-top: 0; }
+    .watch-btn { background: #0f2a1a !important; border-color: #166534 !important; color: #4ade80 !important; }
+    .watch-btn.active { background: #2d1a0e !important; border-color: #92400e !important; color: #fb923c !important; }
+    .info-box { background: #0f1117; border: 1px solid #2a2d3a; border-radius: 8px; padding: 12px; font-size: 11px; color: #64748b; line-height: 1.8; margin-bottom: 16px; }
+    .info-box strong { color: #94a3b8; }
+    .success-box { background: #0f2a1a; border: 1px solid #166534; border-radius: 10px; padding: 14px; margin-top: 12px; }
+    .success-box p { font-size: 13px; color: #4ade80; }
+    .success-box span { font-size: 11px; color: #64748b; margin-top: 6px; display: block; }
   </style>
 </head>
 <body>
 <div class="page-wrap">
 
-  <!-- BRANDING HEADER -->
+  <!-- BRANDING -->
   <div class="brand-header">
     <div class="brand-left">
       <div class="brand-logo">🎯</div>
@@ -192,11 +156,14 @@
       <i class="ti ti-user"></i> Single Lead
     </button>
     <button class="tab" onclick="switchTab('bulk')">
-      <i class="ti ti-table-import"></i> Bulk CSV Upload
+      <i class="ti ti-table-import"></i> Bulk CSV
+    </button>
+    <button class="tab" onclick="switchTab('sheets')">
+      <i class="ti ti-brand-google"></i> Google Sheets
     </button>
   </div>
 
-  <!-- TAB 1: SINGLE LEAD -->
+  <!-- TAB 1: SINGLE -->
   <div class="tab-panel active" id="tab-single">
     <div class="card">
       <div class="section-title">Lead Details</div>
@@ -222,7 +189,6 @@
           </select>
         </div>
       </div>
-
       <div class="section-title">Engagement Signals</div>
       <div class="grid">
         <div class="field"><label>Website Visits</label><input type="number" id="website_visits" value="10" min="0"></div>
@@ -233,7 +199,6 @@
           <select id="prev_purchase"><option value="1">Yes</option><option value="0">No</option></select>
         </div>
       </div>
-
       <div class="section-title">Intent</div>
       <div class="grid">
         <div class="field">
@@ -241,12 +206,10 @@
           <select id="demo_req"><option value="1">Yes</option><option value="0">No</option></select>
         </div>
       </div>
-
       <button class="btn" id="scoreBtn" onclick="scoreSingle()">
         <i class="ti ti-sparkles"></i>&nbsp; Score this Lead
       </button>
       <div class="error" id="error-msg" style="display:none;"></div>
-
       <div class="result-panel" id="result-panel">
         <div class="result-top">
           <div>
@@ -277,7 +240,6 @@
   <div class="tab-panel" id="tab-bulk">
     <div class="card">
       <div class="section-title">Upload your leads CSV</div>
-
       <div class="drop-zone" id="drop-zone" onclick="document.getElementById('csv-input').click()"
            ondragover="event.preventDefault();this.classList.add('dragover')"
            ondragleave="this.classList.remove('dragover')"
@@ -287,36 +249,70 @@
         <span>or click to browse</span>
       </div>
       <input type="file" id="csv-input" accept=".csv" onchange="handleFile(this.files[0])">
-
-      <div style="background:#0f1117;border:1px solid #2a2d3a;border-radius:8px;padding:12px;font-size:11px;color:#64748b;line-height:1.8;">
-        <strong style="color:#94a3b8;">Required CSV columns:</strong><br>
+      <div class="info-box">
+        <strong>Required CSV columns:</strong><br>
         age, annual_income, website_visits, emails_opened, demo_requested, response_time_hours, previous_purchase, company_size, industry
       </div>
-
       <div id="bulk-results" style="display:none;">
         <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
         <div class="progress-label" id="progress-label">Scoring leads...</div>
-
-        <div class="bulk-summary" id="bulk-summary"></div>
-
+        <div class="bulk-summary" id="bulk-summary" style="margin-top:12px;"></div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>#</th>
-                <th>Industry</th>
-                <th>Company</th>
-                <th>Score</th>
-                <th>Priority</th>
-                <th>Action</th>
+                <th>#</th><th>Industry</th><th>Company</th>
+                <th>Score</th><th>Priority</th><th>Action</th>
               </tr>
             </thead>
             <tbody id="bulk-table-body"></tbody>
           </table>
         </div>
-
         <button class="download-btn" onclick="downloadCSV()">
           <i class="ti ti-download"></i>&nbsp; Download Scored CSV
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: GOOGLE SHEETS -->
+  <div class="tab-panel" id="tab-sheets">
+    <div class="card">
+      <div class="section-title">Connect your Google Sheet</div>
+
+      <div class="info-box">
+        <strong>Before you start:</strong><br>
+        1. Open your Google Sheet → click <strong>Share</strong><br>
+        2. Set to <strong>"Anyone with the link can view"</strong><br>
+        3. Make sure Row 1 has the correct column headers:<br>
+        <strong>age, annual_income, website_visits, emails_opened, demo_requested, response_time_hours, previous_purchase, company_size, industry</strong><br>
+        4. Paste the sheet URL below and click Score!
+      </div>
+
+      <div class="field" style="margin-bottom:12px;">
+        <label>Google Sheet URL</label>
+        <input type="text" id="sheet-url" placeholder="https://docs.google.com/spreadsheets/d/...">
+      </div>
+
+      <div class="sheets-btn-row">
+        <button class="btn" id="score-sheet-btn" onclick="scoreSheet(this)">
+          <i class="ti ti-table"></i>&nbsp; Score All Leads in Sheet
+        </button>
+        <button class="btn watch-btn" id="watch-btn" onclick="toggleWatch()">
+          <i class="ti ti-eye" id="watch-icon"></i>&nbsp; <span id="watch-label">Auto-Watch</span>
+        </button>
+      </div>
+
+      <div id="sheet-error" class="error" style="display:none;"></div>
+
+      <div id="sheet-result" style="display:none; margin-top:20px;">
+        <div class="bulk-summary" id="sheet-summary"></div>
+        <div class="success-box">
+          <p id="sheet-message"></p>
+          <span>Scores are based on your leads data. Download the CSV below to save results.</span>
+        </div>
+        <button class="download-btn" id="sheet-download-btn" onclick="downloadSheetCSV()" style="display:none;">
+          <i class="ti ti-download"></i>&nbsp; Download Scored Results
         </button>
       </div>
     </div>
@@ -328,20 +324,25 @@
 const API = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost'
   ? 'http://127.0.0.1:5000/score'
   : '/score';
+
 const WEIGHTS = {
   website_visits:0.2303, emails_opened:0.1947, demo_requested:0.1268,
   annual_income:0.1162, response_time_hours:0.1101, previous_purchase:0.0682,
   age:0.0657, company_size_enc:0.0510, industry_enc:0.0370
 };
-const IND_MAP = {Tech:4,Finance:0,Healthcare:1,Manufacturing:2,Retail:3};
-const CS_MAP = {Large:0,Medium:2,Small:1};
+const IND_MAP = {Tech:4, Finance:0, Healthcare:1, Manufacturing:2, Retail:3};
+const CS_MAP  = {Large:0, Medium:2, Small:1};
 
 function norm(v,mn,mx){return Math.min(1,Math.max(0,(v-mn)/(mx-mn)));}
 
 function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active', (i===0&&tab==='single')||(i===1&&tab==='bulk')));
-  document.getElementById('tab-single').classList.toggle('active', tab==='single');
-  document.getElementById('tab-bulk').classList.toggle('active', tab==='bulk');
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    t.classList.toggle('active',
+      (i===0&&tab==='single')||(i===1&&tab==='bulk')||(i===2&&tab==='sheets'));
+  });
+  ['single','bulk','sheets'].forEach(id => {
+    document.getElementById('tab-'+id).classList.toggle('active', id===tab);
+  });
 }
 
 async function callAPI(payload) {
@@ -352,7 +353,6 @@ async function callAPI(payload) {
     });
     return await res.json();
   } catch(e) {
-    // local fallback
     const p = payload;
     const raw =
       WEIGHTS.website_visits    * norm(p.website_visits,0,30) +
@@ -394,11 +394,9 @@ async function scoreSingle() {
 function renderSingle(score, status, p) {
   document.getElementById('result-panel').style.display = 'block';
   document.getElementById('score-num').textContent = score;
-
   const arc = document.getElementById('gauge-arc');
   arc.style.strokeDashoffset = 150.8 - (score/100)*150.8;
   arc.style.stroke = score>=70?'#f97316':score>=40?'#fbbf24':'#3b82f6';
-
   const badge = document.getElementById('status-badge');
   badge.style.display = 'inline-flex';
   badge.textContent = status;
@@ -424,10 +422,8 @@ function renderSingle(score, status, p) {
       <span class="feat-pct">${Math.round(c.v*100)}%</span>
     </div>`).join('');
 
-  const rec = score>=70
-    ? 'Assign to senior sales rep immediately. Schedule a demo call within 24 hours.'
-    : score>=40
-    ? 'Add to nurture sequence. Follow up with a product email within 3 days.'
+  const rec = score>=70 ? 'Assign to senior sales rep immediately. Schedule a demo call within 24 hours.'
+    : score>=40 ? 'Add to nurture sequence. Follow up with a product email within 3 days.'
     : 'Low engagement. Place in long-term drip campaign.';
 
   document.getElementById('pred-details').innerHTML = `
@@ -457,7 +453,7 @@ function handleFile(file) {
 function parseCSV(text) {
   const lines = text.trim().split('\n');
   const headers = lines[0].split(',').map(h=>h.trim());
-  return lines.slice(1).map(line => {
+  return lines.slice(1).filter(l=>l.trim()).map(line => {
     const vals = line.split(',');
     const obj = {};
     headers.forEach((h,i) => obj[h] = vals[i]?.trim());
@@ -466,62 +462,43 @@ function parseCSV(text) {
 }
 
 let scoredData = [];
+let sheetScoredData = [];
 
 async function parseAndScore(csvText) {
   const rows = parseCSV(csvText);
   scoredData = [];
   const total = rows.length;
-  const bulkResults = document.getElementById('bulk-results');
-  bulkResults.style.display = 'block';
+  document.getElementById('bulk-results').style.display = 'block';
   document.getElementById('bulk-table-body').innerHTML = '';
   document.getElementById('bulk-summary').innerHTML = '';
-
   let hot=0, warm=0, cold=0;
 
   for (let i=0; i<rows.length; i++) {
     const r = rows[i];
     const payload = {
-      age:                 parseFloat(r.age)||35,
-      annual_income:       parseFloat(r.annual_income)||60000,
-      website_visits:      parseFloat(r.website_visits)||0,
-      emails_opened:       parseFloat(r.emails_opened)||0,
-      demo_requested:      parseFloat(r.demo_requested)||0,
-      response_time_hours: parseFloat(r.response_time_hours)||24,
-      previous_purchase:   parseFloat(r.previous_purchase)||0,
-      company_size:        r.company_size||'Medium',
-      industry:            r.industry||'Tech',
+      age: parseFloat(r.age)||35, annual_income: parseFloat(r.annual_income)||60000,
+      website_visits: parseFloat(r.website_visits)||0, emails_opened: parseFloat(r.emails_opened)||0,
+      demo_requested: parseFloat(r.demo_requested)||0, response_time_hours: parseFloat(r.response_time_hours)||24,
+      previous_purchase: parseFloat(r.previous_purchase)||0,
+      company_size: r.company_size||'Medium', industry: r.industry||'Tech',
     };
-
     const data = await callAPI(payload);
-    const score = data.score;
-    const status = data.status;
+    const score = data.score; const status = data.status;
     if (score>=70) hot++; else if (score>=40) warm++; else cold++;
-
-    const rec = score>=70 ? 'Call within 24hrs'
-      : score>=40 ? 'Nurture sequence'
-      : 'Drip campaign';
-
+    const rec = score>=70?'Call within 24hrs':score>=40?'Nurture sequence':'Drip campaign';
     scoredData.push({...payload, score, status, rec});
-
-    const pillClass = score>=70?'pill-hot':score>=40?'pill-warm':'pill-cold';
     const barColor = score>=70?'#f97316':score>=40?'#fbbf24':'#3b82f6';
-
+    const pillClass = score>=70?'pill-hot':score>=40?'pill-warm':'pill-cold';
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td style="color:#64748b">${i+1}</td>
-      <td>${payload.industry}</td>
-      <td>${payload.company_size}</td>
-      <td>
-        <div class="score-bar-wrap">
-          <strong>${score}</strong>
-          <div class="score-bar-track"><div class="score-bar-fill" style="width:${score}%;background:${barColor}"></div></div>
-        </div>
-      </td>
+      <td>${payload.industry}</td><td>${payload.company_size}</td>
+      <td><div class="score-bar-wrap"><strong>${score}</strong>
+        <div class="score-bar-track"><div class="score-bar-fill" style="width:${score}%;background:${barColor}"></div></div>
+      </div></td>
       <td><span class="pill ${pillClass}">${status}</span></td>
       <td style="color:#94a3b8;font-size:11px">${rec}</td>`;
     document.getElementById('bulk-table-body').appendChild(tr);
-
-    // update progress
     const pct = Math.round(((i+1)/total)*100);
     document.getElementById('progress-fill').style.width = pct+'%';
     document.getElementById('progress-label').textContent = `Scored ${i+1} of ${total} leads (${pct}%)`;
@@ -536,16 +513,135 @@ async function parseAndScore(csvText) {
 
 function downloadCSV() {
   const headers = ['#','age','annual_income','industry','company_size','website_visits','emails_opened','demo_requested','response_time_hours','previous_purchase','score','status','recommended_action'];
-  const rows = scoredData.map((r,i) => [
-    i+1, r.age, r.annual_income, r.industry, r.company_size,
-    r.website_visits, r.emails_opened, r.demo_requested,
-    r.response_time_hours, r.previous_purchase, r.score, r.status, r.rec
-  ]);
-  const csv = [headers, ...rows].map(r=>r.join(',')).join('\n');
+  const rows = scoredData.map((r,i) => [i+1,r.age,r.annual_income,r.industry,r.company_size,r.website_visits,r.emails_opened,r.demo_requested,r.response_time_hours,r.previous_purchase,r.score,r.status,r.rec]);
+  const csv = [headers,...rows].map(r=>r.join(',')).join('\n');
   const a = document.createElement('a');
-  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-  a.download = 'scored_leads.csv';
-  a.click();
+  a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download = 'scored_leads.csv'; a.click();
+}
+
+function downloadSheetCSV() {
+  const headers = ['#','age','annual_income','industry','company_size','website_visits','emails_opened','demo_requested','response_time_hours','previous_purchase','score','status','recommended_action'];
+  const rows = sheetScoredData.map((r,i) => [i+1,r.age,r.annual_income,r.industry,r.company_size,r.website_visits,r.emails_opened,r.demo_requested,r.response_time_hours,r.previous_purchase,r.score,r.status,r.rec]);
+  const csv = [headers,...rows].map(r=>r.join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download = 'sheet_scored_leads.csv'; a.click();
+}
+
+// ── GOOGLE SHEETS ──
+let isWatching = false;
+let watchInterval = null;
+
+function extractSheetId(url) {
+  const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+  return match ? match[1] : null;
+}
+
+async function fetchAndScoreSheet() {
+  const url = document.getElementById('sheet-url').value.trim();
+  const errEl = document.getElementById('sheet-error');
+  const resultEl = document.getElementById('sheet-result');
+  errEl.style.display = 'none';
+  resultEl.style.display = 'none';
+  sheetScoredData = [];
+
+  const sheetId = extractSheetId(url);
+  if (!sheetId) {
+    errEl.textContent = '⚠️ Invalid Google Sheet URL — make sure it contains /d/YOUR_SHEET_ID/';
+    errEl.style.display = 'block'; return false;
+  }
+
+  const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
+
+  let csvText;
+  try {
+    const res = await fetch(csvUrl);
+    if (!res.ok) throw new Error('Sheet not accessible');
+    csvText = await res.text();
+  } catch(e) {
+    errEl.textContent = '❌ Cannot read sheet. Make sure sharing is set to "Anyone with the link can view"';
+    errEl.style.display = 'block'; return false;
+  }
+
+  const rows = parseCSV(csvText);
+  if (!rows.length) {
+    errEl.textContent = '❌ Sheet appears empty or headers are missing';
+    errEl.style.display = 'block'; return false;
+  }
+
+  let hot=0, warm=0, cold=0;
+
+  for (const r of rows) {
+    const payload = {
+      age: parseFloat(r.age)||35,
+      annual_income: parseFloat(r.annual_income)||60000,
+      website_visits: parseFloat(r.website_visits)||0,
+      emails_opened: parseFloat(r.emails_opened)||0,
+      demo_requested: parseFloat(r.demo_requested)||0,
+      response_time_hours: parseFloat(r.response_time_hours)||24,
+      previous_purchase: parseFloat(r.previous_purchase)||0,
+      company_size: r.company_size||'Medium',
+      industry: r.industry||'Tech',
+    };
+    const data = await callAPI(payload);
+    const score = data.score;
+    const status = data.status;
+    const rec = score>=70?'Call within 24hrs':score>=40?'Nurture sequence':'Drip campaign';
+    if (score>=70) hot++; else if (score>=40) warm++; else cold++;
+    sheetScoredData.push({...payload, score, status, rec});
+  }
+
+  const total = rows.length;
+  resultEl.style.display = 'block';
+  document.getElementById('sheet-message').textContent =
+    `✅ Successfully scored ${total} leads from your Google Sheet!`;
+  document.getElementById('sheet-summary').innerHTML = `
+    <div class="summary-card"><div class="s-num">${total}</div><div class="s-label">Total Scored</div></div>
+    <div class="summary-card"><div class="s-num hot-num">${hot}</div><div class="s-label">🔥 High Priority</div></div>
+    <div class="summary-card"><div class="s-num warm-num">${warm}</div><div class="s-label">⚡ Medium</div></div>
+    <div class="summary-card"><div class="s-num cold-num">${cold}</div><div class="s-label">❄️ Low Priority</div></div>`;
+  document.getElementById('sheet-download-btn').style.display = 'block';
+  return true;
+}
+
+async function scoreSheet(btn) {
+  btn.disabled = true;
+  btn.innerHTML = '<i class="ti ti-loader-2"></i>&nbsp; Scoring sheet...';
+  await fetchAndScoreSheet();
+  btn.disabled = false;
+  btn.innerHTML = '<i class="ti ti-table"></i>&nbsp; Score All Leads in Sheet';
+}
+
+async function toggleWatch() {
+  const url = document.getElementById('sheet-url').value.trim();
+  const errEl = document.getElementById('sheet-error');
+  errEl.style.display = 'none';
+
+  if (!url) {
+    errEl.textContent = '⚠️ Please paste your Google Sheet URL first!';
+    errEl.style.display = 'block'; return;
+  }
+
+  isWatching = !isWatching;
+  const watchBtn = document.getElementById('watch-btn');
+  watchBtn.classList.toggle('active', isWatching);
+  document.getElementById('watch-icon').className = isWatching ? 'ti ti-eye-off' : 'ti ti-eye';
+  document.getElementById('watch-label').textContent = isWatching ? 'Stop Watching' : 'Auto-Watch';
+
+  if (isWatching) {
+    errEl.style.color = '#4ade80';
+    errEl.textContent = '👁️ Watching sheet — auto-scoring every 30 seconds';
+    errEl.style.display = 'block';
+    await fetchAndScoreSheet();
+    watchInterval = setInterval(fetchAndScoreSheet, 30000);
+  } else {
+    clearInterval(watchInterval);
+    watchInterval = null;
+    errEl.style.color = '#f87171';
+    errEl.textContent = '⛔ Stopped watching';
+    errEl.style.display = 'block';
+  }
 }
 </script>
 </body>
