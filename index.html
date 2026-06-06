@@ -552,7 +552,7 @@ async function fetchAndScoreSheet() {
     errEl.style.display = 'block'; return false;
   }
 
-  const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
+  const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
 
   let csvText;
   try {
