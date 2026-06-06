@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lead AI Scorer</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 40px 16px;
+    }
+
+    .page-wrap { max-width: 720px; margin: 0 auto; }
+
+    /* ── HEADER / BRANDING ── */
+    .brand-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .brand-left { display: flex; align-items: center; gap: 14px; }
+    .brand-logo {
+      width: 46px; height: 46px; border-radius: 12px;
+      background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; box-shadow: 0 4px 14px rgba(99,102,241,0.35);
+    }
+    .brand-name { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+    .brand-tagline { font-size: 12px; color: #64748b; margin-top: 2px; }
+    .brand-author {
+      font-size: 11px; color: #475569; background: #1a1d27;
+      border: 1px solid #2a2d3a; border-radius: 99px;
+      padding: 5px 12px; display: flex; align-items: center; gap: 6px;
+    }
+    .brand-author i { color: #6366f1; }
+
+    /* ── TABS ── */
+    .tabs { display: flex; gap: 4px; background: #1a1d27; border: 1px solid #2a2d3a; border-radius: 10px; padding: 4px; margin-bottom: 20px; }
+    .tab {
+      flex: 1; padding: 8px; text-align: center; font-size: 13px;
+      font-weight: 500; border-radius: 7px; cursor: pointer;
+      color: #64748b; transition: all 0.2s; border: none; background: none;
+    }
+    .tab.active { background: #1e3a5f; color: #93c5fd; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── CARD ── */
+    .card {
+      background: #1a1d27; border: 1px solid #2a2d3a;
+      border-radius: 16px; padding: 28px;
+    }
+
+    .section-title {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #475569; margin: 20px 0 10px;
+    }
+    .section-title:first-child { margin-top: 0; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field label { font-size: 12px; color: #94a3b8; }
+    .field input, .field select {
+      padding: 8px 10px; border-radius: 8px;
+      border: 1px solid #2a2d3a; background: #0f1117;
+      color: #e2e8f0; font-size: 13px;
+    }
+    .field input:focus, .field select:focus {
+      outline: none; border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.15);
+    }
+    .field select option { background: #1a1d27; }
+
+    .btn {
+      width: 100%; padding: 11px; margin-top: 20px;
+      background: #1e3a5f; border: 1px solid #2a4a7f;
+      border-radius: 8px; color: #93c5fd;
+      font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s;
+    }
+    .btn:hover { background: #1d4ed8; color: #fff; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── RESULT ── */
+    .result-panel {
+      background: #0f1117; border: 1px solid #2a2d3a;
+      border-radius: 12px; padding: 20px; margin-top: 20px; display: none;
+    }
+    .result-top { display: flex; align-items: center; gap: 20px; }
+    .score-big { font-size: 40px; font-weight: 600; line-height: 1; }
+    .score-out { font-size: 12px; color: #64748b; margin-top: 3px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; margin-top: 8px;
+    }
+    .badge-hot { background: #3b1a0e; color: #fb923c; }
+    .badge-warm { background: #2d1e06; color: #fbbf24; }
+    .badge-cold { background: #0c1e35; color: #60a5fa; }
+    hr { border: none; border-top: 1px solid #2a2d3a; margin: 16px 0; }
+    .feat-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; font-size: 12px; }
+    .feat-name { width: 130px; color: #64748b; flex-shrink: 0; }
+    .feat-track { flex: 1; height: 4px; background: #2a2d3a; border-radius: 99px; overflow: hidden; }
+    .feat-fill { height: 100%; border-radius: 99px; background: #3b82f6; transition: width 0.6s ease; }
+    .feat-pct { width: 30px; text-align: right; color: #94a3b8; font-size: 11px; }
+    .detail-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; }
+    .detail-row span:first-child { color: #64748b; }
+    .rec { font-size: 12px; color: #94a3b8; line-height: 1.6; }
+    .rec strong { color: #e2e8f0; }
+    .error { color: #f87171; font-size: 12px; margin-top: 8px; }
+
+    /* ── CSV UPLOAD ── */
+    .drop-zone {
+      border: 2px dashed #2a2d3a; border-radius: 12px;
+      padding: 40px; text-align: center; cursor: pointer;
+      transition: all 0.2s; margin-bottom: 16px;
+    }
+    .drop-zone:hover, .drop-zone.dragover { border-color: #3b82f6; background: #0c1e35; }
+    .drop-zone i { font-size: 32px; color: #3b82f6; display: block; margin-bottom: 10px; }
+    .drop-zone p { font-size: 14px; color: #64748b; }
+    .drop-zone span { font-size: 12px; color: #3b82f6; }
+    #csv-input { display: none; }
+
+    /* ── BULK TABLE ── */
+    .table-wrap { overflow-x: auto; margin-top: 20px; border-radius: 10px; border: 1px solid #2a2d3a; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    thead { background: #1a1d27; }
+    th { padding: 10px 12px; text-align: left; color: #64748b; font-weight: 600;
+         font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #2a2d3a; }
+    td { padding: 10px 12px; border-bottom: 1px solid #1a1d27; color: #e2e8f0; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #1a1d27; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 8px; border-radius: 99px; font-size: 11px; font-weight: 600;
+    }
+    .pill-hot { background: #3b1a0e; color: #fb923c; }
+    .pill-warm { background: #2d1e06; color: #fbbf24; }
+    .pill-cold { background: #0c1e35; color: #60a5fa; }
+    .score-bar-wrap { display: flex; align-items: center; gap: 8px; }
+    .score-bar-track { width: 80px; height: 4px; background: #2a2d3a; border-radius: 99px; overflow: hidden; }
+    .score-bar-fill { height: 100%; border-radius: 99px; }
+    .bulk-summary {
+      display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .summary-card {
+      flex: 1; min-width: 100px; background: #0f1117;
+      border: 1px solid #2a2d3a; border-radius: 10px; padding: 12px 16px;
+    }
+    .summary-card .s-num { font-size: 24px; font-weight: 600; }
+    .summary-card .s-label { font-size: 11px; color: #64748b; margin-top: 2px; }
+    .hot-num { color: #fb923c; }
+    .warm-num { color: #fbbf24; }
+    .cold-num { color: #60a5fa; }
+    .progress-bar {
+      width: 100%; height: 4px; background: #2a2d3a; border-radius: 99px;
+      overflow: hidden; margin: 12px 0 6px;
+    }
+    .progress-fill { height: 100%; background: #3b82f6; border-radius: 99px; transition: width 0.4s; }
+    .progress-label { font-size: 11px; color: #64748b; }
+    .download-btn {
+      width: 100%; padding: 9px; margin-top: 14px;
+      background: #0f2a1a; border: 1px solid #166534;
+      border-radius: 8px; color: #4ade80;
+      font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;
+    }
+    .download-btn:hover { background: #166534; color: #fff; }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- BRANDING HEADER -->
+  <div class="brand-header">
+    <div class="brand-left">
+      <div class="brand-logo">🎯</div>
+      <div>
+        <div class="brand-name">Lead AI Scorer</div>
+        <div class="brand-tagline">ML-powered conversion prediction</div>
+      </div>
+    </div>
+    <div class="brand-author">
+      <i class="ti ti-user-circle"></i> Built by Adarsh Dubey
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('single')">
+      <i class="ti ti-user"></i> Single Lead
+    </button>
+    <button class="tab" onclick="switchTab('bulk')">
+      <i class="ti ti-table-import"></i> Bulk CSV Upload
+    </button>
+  </div>
+
+  <!-- TAB 1: SINGLE LEAD -->
+  <div class="tab-panel active" id="tab-single">
+    <div class="card">
+      <div class="section-title">Lead Details</div>
+      <div class="grid">
+        <div class="field"><label>Age</label><input type="number" id="age" value="35" min="18" max="80"></div>
+        <div class="field"><label>Annual Income ($)</label><input type="number" id="income" value="90000"></div>
+        <div class="field">
+          <label>Industry</label>
+          <select id="industry">
+            <option value="Tech">Technology</option>
+            <option value="Finance">Finance</option>
+            <option value="Retail">Retail</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Manufacturing">Manufacturing</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Company Size</label>
+          <select id="company_size">
+            <option value="Large">Large (500+)</option>
+            <option value="Medium">Medium (50–499)</option>
+            <option value="Small">Small (&lt;50)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="section-title">Engagement Signals</div>
+      <div class="grid">
+        <div class="field"><label>Website Visits</label><input type="number" id="website_visits" value="10" min="0"></div>
+        <div class="field"><label>Emails Opened</label><input type="number" id="emails_opened" value="6" min="0"></div>
+        <div class="field"><label>Response Time (hrs)</label><input type="number" id="response_time" value="4" min="0"></div>
+        <div class="field">
+          <label>Previous Purchase</label>
+          <select id="prev_purchase"><option value="1">Yes</option><option value="0">No</option></select>
+        </div>
+      </div>
+
+      <div class="section-title">Intent</div>
+      <div class="grid">
+        <div class="field">
+          <label>Demo Requested</label>
+          <select id="demo_req"><option value="1">Yes</option><option value="0">No</option></select>
+        </div>
+      </div>
+
+      <button class="btn" id="scoreBtn" onclick="scoreSingle()">
+        <i class="ti ti-sparkles"></i>&nbsp; Score this Lead
+      </button>
+      <div class="error" id="error-msg" style="display:none;"></div>
+
+      <div class="result-panel" id="result-panel">
+        <div class="result-top">
+          <div>
+            <svg viewBox="0 0 110 68" width="110" height="68">
+              <path d="M8,62 A48,48 0 0,1 102,62" fill="none" stroke="#1e293b" stroke-width="9" stroke-linecap="round"/>
+              <path id="gauge-arc" d="M8,62 A48,48 0 0,1 102,62" fill="none" stroke="#3b82f6" stroke-width="9"
+                stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="150.8"
+                style="transition:stroke-dashoffset 0.7s ease,stroke 0.4s;"/>
+            </svg>
+          </div>
+          <div>
+            <div class="score-big" id="score-num">—</div>
+            <div class="score-out">out of 100</div>
+            <div class="badge" id="status-badge" style="display:none;"></div>
+          </div>
+        </div>
+        <hr>
+        <div class="section-title">Feature Contribution</div>
+        <div id="feat-bars"></div>
+        <hr>
+        <div class="section-title">Prediction Details</div>
+        <div id="pred-details"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: BULK CSV -->
+  <div class="tab-panel" id="tab-bulk">
+    <div class="card">
+      <div class="section-title">Upload your leads CSV</div>
+
+      <div class="drop-zone" id="drop-zone" onclick="document.getElementById('csv-input').click()"
+           ondragover="event.preventDefault();this.classList.add('dragover')"
+           ondragleave="this.classList.remove('dragover')"
+           ondrop="handleDrop(event)">
+        <i class="ti ti-file-type-csv"></i>
+        <p>Drop your CSV file here</p>
+        <span>or click to browse</span>
+      </div>
+      <input type="file" id="csv-input" accept=".csv" onchange="handleFile(this.files[0])">
+
+      <div style="background:#0f1117;border:1px solid #2a2d3a;border-radius:8px;padding:12px;font-size:11px;color:#64748b;line-height:1.8;">
+        <strong style="color:#94a3b8;">Required CSV columns:</strong><br>
+        age, annual_income, website_visits, emails_opened, demo_requested, response_time_hours, previous_purchase, company_size, industry
+      </div>
+
+      <div id="bulk-results" style="display:none;">
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+        <div class="progress-label" id="progress-label">Scoring leads...</div>
+
+        <div class="bulk-summary" id="bulk-summary"></div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Industry</th>
+                <th>Company</th>
+                <th>Score</th>
+                <th>Priority</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="bulk-table-body"></tbody>
+          </table>
+        </div>
+
+        <button class="download-btn" onclick="downloadCSV()">
+          <i class="ti ti-download"></i>&nbsp; Download Scored CSV
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const API = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost'
+  ? 'http://127.0.0.1:5000/score'
+  : '/score';
+const WEIGHTS = {
+  website_visits:0.2303, emails_opened:0.1947, demo_requested:0.1268,
+  annual_income:0.1162, response_time_hours:0.1101, previous_purchase:0.0682,
+  age:0.0657, company_size_enc:0.0510, industry_enc:0.0370
+};
+const IND_MAP = {Tech:4,Finance:0,Healthcare:1,Manufacturing:2,Retail:3};
+const CS_MAP = {Large:0,Medium:2,Small:1};
+
+function norm(v,mn,mx){return Math.min(1,Math.max(0,(v-mn)/(mx-mn)));}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active', (i===0&&tab==='single')||(i===1&&tab==='bulk')));
+  document.getElementById('tab-single').classList.toggle('active', tab==='single');
+  document.getElementById('tab-bulk').classList.toggle('active', tab==='bulk');
+}
+
+async function callAPI(payload) {
+  try {
+    const res = await fetch(API, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    return await res.json();
+  } catch(e) {
+    // local fallback
+    const p = payload;
+    const raw =
+      WEIGHTS.website_visits    * norm(p.website_visits,0,30) +
+      WEIGHTS.emails_opened     * norm(p.emails_opened,0,20) +
+      WEIGHTS.demo_requested    * p.demo_requested +
+      WEIGHTS.annual_income     * norm(p.annual_income,20000,300000) +
+      WEIGHTS.response_time_hours * (1-norm(p.response_time_hours,0,72)) +
+      WEIGHTS.previous_purchase * p.previous_purchase +
+      WEIGHTS.age               * norm(p.age,18,70) +
+      WEIGHTS.company_size_enc  * ((CS_MAP[p.company_size]||1)/2) +
+      WEIGHTS.industry_enc      * ((IND_MAP[p.industry]||4)/4);
+    const score = Math.round(raw*100);
+    return { score, status: score>=70?'🔥 HIGH PRIORITY':score>=40?'⚡ MEDIUM PRIORITY':'❄️ LOW PRIORITY' };
+  }
+}
+
+async function scoreSingle() {
+  const btn = document.getElementById('scoreBtn');
+  btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader-2"></i>&nbsp; Scoring...';
+  document.getElementById('error-msg').style.display = 'none';
+
+  const payload = {
+    age:                 parseFloat(document.getElementById('age').value),
+    annual_income:       parseFloat(document.getElementById('income').value),
+    website_visits:      parseFloat(document.getElementById('website_visits').value),
+    emails_opened:       parseFloat(document.getElementById('emails_opened').value),
+    response_time_hours: parseFloat(document.getElementById('response_time').value),
+    previous_purchase:   parseFloat(document.getElementById('prev_purchase').value),
+    demo_requested:      parseFloat(document.getElementById('demo_req').value),
+    company_size:        document.getElementById('company_size').value,
+    industry:            document.getElementById('industry').value,
+  };
+
+  const data = await callAPI(payload);
+  renderSingle(data.score, data.status, payload);
+  btn.disabled = false; btn.innerHTML = '<i class="ti ti-sparkles"></i>&nbsp; Score this Lead';
+}
+
+function renderSingle(score, status, p) {
+  document.getElementById('result-panel').style.display = 'block';
+  document.getElementById('score-num').textContent = score;
+
+  const arc = document.getElementById('gauge-arc');
+  arc.style.strokeDashoffset = 150.8 - (score/100)*150.8;
+  arc.style.stroke = score>=70?'#f97316':score>=40?'#fbbf24':'#3b82f6';
+
+  const badge = document.getElementById('status-badge');
+  badge.style.display = 'inline-flex';
+  badge.textContent = status;
+  badge.className = 'badge ' + (score>=70?'badge-hot':score>=40?'badge-warm':'badge-cold');
+
+  const contribs = [
+    {name:'Website visits',  v:norm(p.website_visits,0,30)*WEIGHTS.website_visits},
+    {name:'Emails opened',   v:norm(p.emails_opened,0,20)*WEIGHTS.emails_opened},
+    {name:'Demo requested',  v:p.demo_requested*WEIGHTS.demo_requested},
+    {name:'Annual income',   v:norm(p.annual_income,20000,300000)*WEIGHTS.annual_income},
+    {name:'Response time',   v:(1-norm(p.response_time_hours,0,72))*WEIGHTS.response_time_hours},
+    {name:'Prev. purchase',  v:p.previous_purchase*WEIGHTS.previous_purchase},
+    {name:'Age',             v:norm(p.age,18,70)*WEIGHTS.age},
+    {name:'Company size',    v:((CS_MAP[p.company_size]||1)/2)*WEIGHTS.company_size_enc},
+    {name:'Industry',        v:((IND_MAP[p.industry]||4)/4)*WEIGHTS.industry_enc},
+  ].sort((a,b)=>b.v-a.v);
+
+  const maxV = Math.max(...contribs.map(c=>c.v),0.001);
+  document.getElementById('feat-bars').innerHTML = contribs.map(c=>`
+    <div class="feat-row">
+      <span class="feat-name">${c.name}</span>
+      <div class="feat-track"><div class="feat-fill" style="width:${Math.round((c.v/maxV)*100)}%"></div></div>
+      <span class="feat-pct">${Math.round(c.v*100)}%</span>
+    </div>`).join('');
+
+  const rec = score>=70
+    ? 'Assign to senior sales rep immediately. Schedule a demo call within 24 hours.'
+    : score>=40
+    ? 'Add to nurture sequence. Follow up with a product email within 3 days.'
+    : 'Low engagement. Place in long-term drip campaign.';
+
+  document.getElementById('pred-details').innerHTML = `
+    <div class="detail-row"><span>Conversion probability</span><span>${score}%</span></div>
+    <div class="detail-row"><span>No-conversion probability</span><span>${100-score}%</span></div>
+    <div class="detail-row"><span>Model</span><span>Random Forest (85.5% acc.)</span></div>
+    <hr>
+    <div class="rec"><strong>Recommended action:</strong> ${rec}</div>`;
+}
+
+// ── CSV BULK ──
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.remove('dragover');
+  handleFile(e.dataTransfer.files[0]);
+}
+
+function handleFile(file) {
+  if (!file) return;
+  document.getElementById('drop-zone').innerHTML =
+    `<i class="ti ti-check" style="color:#4ade80"></i><p style="color:#4ade80">${file.name} loaded</p><span>${(file.size/1024).toFixed(1)} KB</span>`;
+  const reader = new FileReader();
+  reader.onload = e => parseAndScore(e.target.result);
+  reader.readAsText(file);
+}
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',').map(h=>h.trim());
+  return lines.slice(1).map(line => {
+    const vals = line.split(',');
+    const obj = {};
+    headers.forEach((h,i) => obj[h] = vals[i]?.trim());
+    return obj;
+  });
+}
+
+let scoredData = [];
+
+async function parseAndScore(csvText) {
+  const rows = parseCSV(csvText);
+  scoredData = [];
+  const total = rows.length;
+  const bulkResults = document.getElementById('bulk-results');
+  bulkResults.style.display = 'block';
+  document.getElementById('bulk-table-body').innerHTML = '';
+  document.getElementById('bulk-summary').innerHTML = '';
+
+  let hot=0, warm=0, cold=0;
+
+  for (let i=0; i<rows.length; i++) {
+    const r = rows[i];
+    const payload = {
+      age:                 parseFloat(r.age)||35,
+      annual_income:       parseFloat(r.annual_income)||60000,
+      website_visits:      parseFloat(r.website_visits)||0,
+      emails_opened:       parseFloat(r.emails_opened)||0,
+      demo_requested:      parseFloat(r.demo_requested)||0,
+      response_time_hours: parseFloat(r.response_time_hours)||24,
+      previous_purchase:   parseFloat(r.previous_purchase)||0,
+      company_size:        r.company_size||'Medium',
+      industry:            r.industry||'Tech',
+    };
+
+    const data = await callAPI(payload);
+    const score = data.score;
+    const status = data.status;
+    if (score>=70) hot++; else if (score>=40) warm++; else cold++;
+
+    const rec = score>=70 ? 'Call within 24hrs'
+      : score>=40 ? 'Nurture sequence'
+      : 'Drip campaign';
+
+    scoredData.push({...payload, score, status, rec});
+
+    const pillClass = score>=70?'pill-hot':score>=40?'pill-warm':'pill-cold';
+    const barColor = score>=70?'#f97316':score>=40?'#fbbf24':'#3b82f6';
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="color:#64748b">${i+1}</td>
+      <td>${payload.industry}</td>
+      <td>${payload.company_size}</td>
+      <td>
+        <div class="score-bar-wrap">
+          <strong>${score}</strong>
+          <div class="score-bar-track"><div class="score-bar-fill" style="width:${score}%;background:${barColor}"></div></div>
+        </div>
+      </td>
+      <td><span class="pill ${pillClass}">${status}</span></td>
+      <td style="color:#94a3b8;font-size:11px">${rec}</td>`;
+    document.getElementById('bulk-table-body').appendChild(tr);
+
+    // update progress
+    const pct = Math.round(((i+1)/total)*100);
+    document.getElementById('progress-fill').style.width = pct+'%';
+    document.getElementById('progress-label').textContent = `Scored ${i+1} of ${total} leads (${pct}%)`;
+  }
+
+  document.getElementById('bulk-summary').innerHTML = `
+    <div class="summary-card"><div class="s-num">${total}</div><div class="s-label">Total Leads</div></div>
+    <div class="summary-card"><div class="s-num hot-num">${hot}</div><div class="s-label">🔥 High Priority</div></div>
+    <div class="summary-card"><div class="s-num warm-num">${warm}</div><div class="s-label">⚡ Medium Priority</div></div>
+    <div class="summary-card"><div class="s-num cold-num">${cold}</div><div class="s-label">❄️ Low Priority</div></div>`;
+}
+
+function downloadCSV() {
+  const headers = ['#','age','annual_income','industry','company_size','website_visits','emails_opened','demo_requested','response_time_hours','previous_purchase','score','status','recommended_action'];
+  const rows = scoredData.map((r,i) => [
+    i+1, r.age, r.annual_income, r.industry, r.company_size,
+    r.website_visits, r.emails_opened, r.demo_requested,
+    r.response_time_hours, r.previous_purchase, r.score, r.status, r.rec
+  ]);
+  const csv = [headers, ...rows].map(r=>r.join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'scored_leads.csv';
+  a.click();
+}
+</script>
+</body>
+</html>
