@@ -60,6 +60,13 @@ python app.py
 
 Open `http://localhost:5000`.
 
+Run the API checks with:
+
+```bash
+pip install -r requirements-dev.txt
+pytest
+```
+
 ## Skills Demonstrated
 
 `Python` `Flask` `scikit-learn` `Pandas` `Random Forest` `REST API`
