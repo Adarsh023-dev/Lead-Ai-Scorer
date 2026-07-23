@@ -1,38 +1,76 @@
-Lead AI Scorer — Live ML Web App
+# Lead AI Scorer
 
-**Live Demo:** https://lead-ai-scorer.onrender.com/  
-**Tech:** Python · Scikit-learn · Random Forest · HTML/CSS/JS · Render
+A deployed machine-learning application that converts sales-lead attributes
+into a 0-100 conversion score. The project demonstrates a complete workflow
+from synthetic data generation and model evaluation to a Flask API and browser
+interface.
 
-## 🚀 What it does
-Scores any sales lead 0–100 based on conversion probability using Machine Learning.
+[View live application](https://lead-ai-scorer.onrender.com/)
 
-## ✅ Features
-- Single lead scoring with visual gauge
-- Bulk CSV upload — score 1000 leads at once  
-- Google Sheets integration — paste sheet URL, get scores instantly
-- Download results as CSV
-- 🔥 Hot / ⚡ Warm / ❄️ Cold priority classification
+![Lead AI Scorer interface](Screenshot%202026-06-06%20152827.png)
 
-## 🧠 Model
-- Algorithm: Random Forest Classifier
-- Training data: 1,000 synthetic lead records
-- Accuracy: 85.5%
-- Features: website visits, emails opened, demo requested, 
-  annual income, response time, previous purchase, 
-  age, company size, industry
+## Business Use Case
 
-## 📁 Files
+Sales teams often have more leads than they can contact immediately. A
+consistent score can help prioritise follow-up, while the final decision remains
+with the sales team.
+
+## Features
+
+- Scores an individual lead from 0 to 100.
+- Groups results into high, medium, and low priority.
+- Exposes a Flask `/score` endpoint for browser-based predictions.
+- Includes a responsive HTML, CSS, and JavaScript interface.
+- Deploys with Gunicorn on Render.
+
+## Model
+
+| Item | Value |
+|---|---|
+| Algorithm | Random Forest Classifier |
+| Development data | 1,000 reproducible synthetic records |
+| Reported test accuracy | 85.5% |
+| Target | Lead conversion |
+| Inputs | Engagement, income, response time, purchase history, company size, industry, and age |
+
+The synthetic target is generated from predefined business rules plus noise.
+The reported accuracy therefore measures performance on this demonstration
+dataset and should not be interpreted as validated real-world performance.
+
+## Repository Structure
+
 | File | Description |
-|------|-------------|
-| `index.html` | Full frontend — scoring UI |
+|---|---|
+| `app.py` | Flask application and scoring API |
+| `index.html` | Browser-based scoring interface |
 | `generate_data.py` | Generates training dataset |
-| `model.py` | Trains Random Forest model |
-| `leads_data.csv` | Generated training data |
+| `model.py` | Trains and evaluates the models |
+| `leads_data.csv` | Reproducible synthetic training data |
+| `lead_scorer_results.png` | Feature importance and confusion matrix |
+| `render.yaml` | Render deployment configuration |
 
-## 🚀 Run Locally
+## Run Locally
+
 ```bash
-pip install pandas scikit-learn matplotlib seaborn
+pip install -r requirements.txt
 python generate_data.py
 python model.py
+python app.py
 ```
-Open `index.html` in browser or use Live Server in VS Code.
+
+Open `http://localhost:5000`.
+
+## Skills Demonstrated
+
+`Python` `Flask` `scikit-learn` `Pandas` `Random Forest` `REST API`
+`Model Deployment`
+
+## Next Validation Step
+
+Retrain the pipeline on permissioned CRM outcomes, compare precision and recall
+against a baseline, calibrate probabilities, and monitor drift before business
+use.
+
+## Author
+
+Adarsh Dubey - Data Analyst
