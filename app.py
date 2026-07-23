@@ -19,11 +19,17 @@ print("✅ Model loaded successfully!")
 def home():
     return send_from_directory('.', 'index.html')
 
+@app.route('/health')
+def health():
+    return jsonify({'status': 'ok'})
+
 # ── Score a lead ──────────────────────────────────────────
 @app.route('/score', methods=['POST'])
 def score_lead():
     try:
-        data = request.json
+        data = request.get_json(silent=True)
+        if not isinstance(data, dict):
+            return jsonify({'error': 'A JSON request body is required.'}), 400
 
         cs_map = {'Large': 0, 'Medium': 2, 'Small': 1}
         ind_map = {'Finance': 0, 'Healthcare': 1, 'Manufacturing': 2, 'Retail': 3, 'Tech': 4}
@@ -39,6 +45,9 @@ def score_lead():
             'company_size_enc':     float(cs_map.get(data.get('company_size', 'Medium'), 2)),
             'industry_enc':         float(ind_map.get(data.get('industry', 'Tech'), 4)),
         }])
+
+        if input_data.isna().any().any():
+            return jsonify({'error': 'All numeric fields must be valid numbers.'}), 400
 
         prob = rf.predict_proba(input_data)[0][1]
         score = round(prob * 100, 1)
